@@ -1,0 +1,21 @@
+{
+	"name": "02_blazniva_krizovatka",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"dependencies": {
+		"@types/node": "^13.9.3",
+		"typescript": "^3.8.3"
+	},
+	"devDependencies": {
+		"chalk": "^3.0.0"
+	},
+	"scripts": {
+		"build": "tsc",
+		"dev": "npm run build && node ./dist/script.js",
+		"watch": "tsc --watch",
+		"w": "npm run watch"
+	},
+	"author": "",
+	"license": "ISC"
+}
