@@ -2,18 +2,16 @@ import chalk from 'chalk';
 const log = (text: string) => process.stdout.write(text);
 
 import { ENTITIES } from './variables';
-import { VehiclePosition, vehicles } from './vehicles';
+import { Vehicle, vehicles } from './vehicles';
 
 export default class Crossroad {
-    public array: Array<string[]>;
+
+	public array: Array<string[]>;
     public size: size;
 
-    constructor(
-        size: number[],
-        exits: Array<{ i: number; j: number }>,
-        vehiclePositions: VehiclePosition[]
-    ) {
-        // init size
+    constructor(size: number[], exits: Array<{ i: number; j: number }>, vehicles: Vehicle[]) {
+
+    	// init size
         this.size = {
             m: size[0] + 2,
             n: size[1] + 2,
@@ -35,23 +33,22 @@ export default class Crossroad {
             this.array[exit.i][exit.j] = ENTITIES.EXIT;
         });
 
-        // set vehicles
-        vehiclePositions.forEach(pos => {
-            const curr = vehicles.find(vehicle => vehicle.id == pos.id);
+        // place vehicles
+        vehicles.forEach(vehicle => {
+            this.array[vehicle.position[0]][vehicle.position[1]] = String(vehicle.id);
 
-            if (curr) {
-                this.array[pos.position[0] + 1][pos.position[1] + 1] = String(curr.id);
-
-                const start = curr.polarity == 'V' ? pos.position[0] : pos.position[1];
-
-                for (let i = start + 1; i < start + 1 + curr.length; i++) {
-                    if (curr.polarity == 'V') {
-                        this.array[i][start + 1] = String(curr.id);
-                    } else {
-                        this.array[start + 1][i] = String(curr.id);
-                    }
+            const start = vehicle.polarity != 'V';
+            for (
+                let i = vehicle.position[+start];
+                i < vehicle.position[+start] + vehicle.length;
+                i++
+            ) {
+                if (vehicle.polarity == 'V') {
+                    this.array[i][vehicle.position[+!start]] = String(vehicle.id);
+                } else {
+                    this.array[vehicle.position[+!start]][i] = String(vehicle.id);
                 }
-            } else throw Error(`Vehicle with given ID not found. (${pos.id})`);
+            }
         });
     }
 
