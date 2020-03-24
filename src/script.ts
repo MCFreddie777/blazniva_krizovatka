@@ -3,11 +3,10 @@ import { vehicles } from './variables';
 import { solve } from './solver';
 
 // turn off for graphical prints
-process.env.PRINT_GRAPHS = '1';
+process.env.PRINT_GRAPHS = '0';
 
 // init crossroad with default vehicles
 const crossroad = new Crossroad([6, 6], vehicles);
 
 // bfs | dfs
-solve('dfs', crossroad, 'cervene');
-// solve('bfs', crossroad, 'cervene');
+solve('bfs', crossroad, 'cervene');

@@ -2,12 +2,7 @@ import chalk from 'chalk';
 import {DIRECTION, Vehicle} from "./types";
 
 // Modify this source file for more tests
-// import { DIRECTIONS, POSITIONS } from './test/testset_1';
-// import { DIRECTIONS, POSITIONS } from './test/testset_2';
-// import { DIRECTIONS, POSITIONS } from './test/testset_3';
-// import { DIRECTIONS, POSITIONS } from './test/testset_4';
-// import { DIRECTIONS, POSITIONS } from './test/testset_5';
-import { DIRECTIONS, POSITIONS } from './test/testset_6';
+import { DIRECTIONS, POSITIONS } from './test/testset_1';
 
 export const ENTITIES: any = {
     FREE: '0',

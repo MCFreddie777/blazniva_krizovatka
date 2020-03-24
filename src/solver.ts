@@ -30,7 +30,7 @@ export const solve = (algorithm: 'dfs' | 'bfs', crossroad: Crossroad, target: st
                     printOperators(visitedStates, md5(JSON.stringify(crossroad)), hash);
                     process.exit();
                 }
-                
+
                 algorithm == 'dfs' ? queue.unshift(movedState) : queue.push(movedState);
             });
         });
