@@ -7,11 +7,7 @@ export const solve = (algorithm: 'dfs' | 'bfs', crossroad: Crossroad, target: st
     if (!targetCar) throw new Error('Auto takej farby neexistuje!');
 
     crossroad.setExit(targetCar.position[0]);
-
-    // print beginning state
-    if (Number(process.env.PRINT_GRAPHS)) {
-        crossroad.prettyPrint(true);
-    }
+    crossroad.prettyPrint(true);
 
     const queue: Crossroad[] = [];
     const visitedStates: StateMap = {};
@@ -21,7 +17,7 @@ export const solve = (algorithm: 'dfs' | 'bfs', crossroad: Crossroad, target: st
         const state = queue.shift()!;
         state.vehicles.forEach((vehicle: Vehicle) => {
             directions.forEach((direction: DIRECTION) => {
-                const movedState = state.move(vehicle, direction, state.exit!);
+                const movedState = state.move(direction, state, vehicle, 1);
                 if (movedState) {
                     const hash = md5(JSON.stringify(movedState));
                     if (!visitedStates[hash]) {
@@ -75,8 +71,12 @@ const printOperators = (states: StateMap, startHash: string, endHash: string) =>
             step.state.prettyPrint(true);
         }
     }
-    console.log(`Number of steps: ${n}`);
+    if (!Number(process.env.PRINT_GRAPHS)) {
+        states[endHash].currentState.prettyPrint(true);
+    }
 
+    console.log(`Number of solution steps: ${n}`);
+    console.log('Number of states (total): ', Object.keys(states).length);
 };
 
 const toStateObject = (
@@ -101,6 +101,11 @@ interface StateMap {
     [key: string]: State;
 }
 
+/* Uzol
+ * previousHash - hash na predhhadzajuci uzol
+ * currentState - stav
+ * operator - ktory zapricinil zmenu medzi stavom predchadzajuceho uzla a aktualnym
+ */
 interface State {
     previousHash: string;
     currentState: Crossroad;

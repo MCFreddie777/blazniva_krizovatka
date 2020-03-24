@@ -53,27 +53,32 @@ export default class Crossroad {
         this.array[mPos][this.size[1] - 1] = ENTITIES.EXIT;
     }
 
-    move(vehicle: Vehicle, direction: DIRECTION, exit: number): Crossroad | undefined {
-        if (this.canMove(vehicle, direction)) {
+    move(
+        direction: DIRECTION,
+        state: Crossroad,
+        vehicle: Vehicle,
+        steps: number
+    ): Crossroad | undefined {
+        if (this.canMove(vehicle, direction, steps)) {
             let vehicles: Vehicle[] = cloneDeep(this.vehicles);
             let _vehicle: Vehicle = cloneDeep(vehicles.find(v => v.id == vehicle.id))!;
 
             // moving
             if (_vehicle.polarity == 'V') {
                 _vehicle.position[0] =
-                    _vehicle.position[0] + (direction == DIRECTION.DOWN ? 1 : -1);
+                    _vehicle.position[0] + (direction == DIRECTION.DOWN ? steps : -1 * steps);
             } else {
                 _vehicle.position[1] =
-                    _vehicle.position[1] + (direction == DIRECTION.RIGHT ? 1 : -1);
+                    _vehicle.position[1] + (direction == DIRECTION.RIGHT ? steps : -1 * steps);
             }
 
             vehicles = vehicles.map(v => (v.id == _vehicle.id ? _vehicle : v));
-            return new Crossroad(this.size.map(n => n - 2), vehicles, exit);
+            return new Crossroad(this.size.map(n => n - 2), vehicles, state.exit);
         }
         return undefined;
     }
 
-    canMove(vehicle: Vehicle, direction: DIRECTION): boolean {
+    canMove(vehicle: Vehicle, direction: DIRECTION, steps: number): boolean {
         const polarity = vehicle.polarity;
         if (
             (polarity == 'V' && (direction == DIRECTION.LEFT || direction == DIRECTION.RIGHT)) ||
@@ -85,14 +90,14 @@ export default class Crossroad {
             if (polarity == 'V') {
                 const positionX =
                     direction == DIRECTION.UP
-                        ? vehicle.position[0] - 1
-                        : vehicle.position[0] + vehicle.length;
+                        ? vehicle.position[0] - steps
+                        : vehicle.position[0] + (vehicle.length - 1) + steps;
                 targetPosition = this.array[positionX][vehicle.position[1]];
             } else {
                 const positionY =
                     direction == DIRECTION.LEFT
-                        ? vehicle.position[1] - 1
-                        : vehicle.position[1] + vehicle.length;
+                        ? vehicle.position[1] - steps
+                        : vehicle.position[1] + (vehicle.length - 1) + steps;
                 targetPosition = this.array[vehicle.position[0]][positionY];
             }
             return targetPosition == ENTITIES.EXIT || targetPosition == ENTITIES.FREE;
