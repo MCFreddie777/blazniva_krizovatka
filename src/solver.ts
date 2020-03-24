@@ -20,22 +20,18 @@ export const solve = (algorithm: 'dfs' | 'bfs', crossroad: Crossroad, target: st
         state.vehicles.forEach((vehicle: Vehicle) => {
             directions.forEach((direction: DIRECTION) => {
                 const movedState = state.move(direction, state, vehicle, 1);
-                if (movedState) {
-                    const hash = md5(JSON.stringify(movedState));
-                    if (!visitedStates[hash]) {
-                        visitedStates[hash] = toStateObject(state, movedState, direction, vehicle);
-                        if (vehicle.id == targetCar.id && movedState.vehicleExits(vehicle.id)) {
-                            printOperators(visitedStates, md5(JSON.stringify(crossroad)), hash);
-                            process.exit();
-                        } else {
-                            if (algorithm == 'dfs') {
-                                queue.unshift(movedState);
-                            } else {
-                                queue.push(movedState);
-                            }
-                        }
-                    }
+                if (!movedState) return;
+
+                const hash = md5(JSON.stringify(movedState));
+                if (visitedStates[hash]) return;
+
+                visitedStates[hash] = toStateObject(state, movedState, direction, vehicle);
+                if (vehicle.id == targetCar.id && movedState.vehicleExits(vehicle.id)) {
+                    printOperators(visitedStates, md5(JSON.stringify(crossroad)), hash);
+                    process.exit();
                 }
+                
+                algorithm == 'dfs' ? queue.unshift(movedState) : queue.push(movedState);
             });
         });
     }
