@@ -1,6 +1,8 @@
 import Crossroad from './crossroad';
-import { DIRECTION, directions, Vehicle, vehicles } from './variables';
+import { Vehicle, DIRECTION, StateMap, Operator, State } from './types';
+import { directions, vehicles } from './variables';
 import md5 from 'md5';
+import chalk from 'chalk';
 
 export const solve = (algorithm: 'dfs' | 'bfs', crossroad: Crossroad, target: string): void => {
     const targetCar = vehicles.find(vehicle => vehicle.name == target);
@@ -37,6 +39,8 @@ export const solve = (algorithm: 'dfs' | 'bfs', crossroad: Crossroad, target: st
             });
         });
     }
+    console.log(chalk.red('Hlavolam nema riesenie.'));
+    process.exit(1);
 };
 
 const printOperators = (states: StateMap, startHash: string, endHash: string) => {
@@ -96,27 +100,3 @@ const toStateObject = (
         steps: 1,
     },
 });
-
-interface StateMap {
-    [key: string]: State;
-}
-
-/* Uzol
- * previousHash - hash na predhhadzajuci uzol
- * currentState - stav
- * operator - ktory zapricinil zmenu medzi stavom predchadzajuceho uzla a aktualnym
- */
-interface State {
-    previousHash: string;
-    currentState: Crossroad;
-    operator: Operator;
-}
-
-interface Operator {
-    direction: string;
-    vehicle: {
-        id: number;
-        name: string;
-    };
-    steps: number;
-}

@@ -1,4 +1,13 @@
 import chalk from 'chalk';
+import {DIRECTION, Vehicle} from "./types";
+
+// Modify this source file for more tests
+// import { DIRECTIONS, POSITIONS } from './test/testset_1';
+// import { DIRECTIONS, POSITIONS } from './test/testset_2';
+// import { DIRECTIONS, POSITIONS } from './test/testset_3';
+// import { DIRECTIONS, POSITIONS } from './test/testset_4';
+// import { DIRECTIONS, POSITIONS } from './test/testset_5';
+import { DIRECTIONS, POSITIONS } from './test/testset_6';
 
 export const ENTITIES: any = {
     FREE: '0',
@@ -13,7 +22,7 @@ export const vehicles: Vehicle[] = [
         color: (text: string) => chalk.bgRed(text),
         length: 2,
         polarity: 'H',
-        position: [3, 2],
+        position: POSITIONS['cervene'],
     },
     {
         id: 2,
@@ -21,7 +30,7 @@ export const vehicles: Vehicle[] = [
         color: (text: string) => chalk.bgKeyword('orange')(text),
         length: 2,
         polarity: 'H',
-        position: [1, 1],
+        position: POSITIONS['oranzove'],
     },
     {
         id: 3,
@@ -29,7 +38,7 @@ export const vehicles: Vehicle[] = [
         color: (text: string) => chalk.bgYellow(text),
         length: 3,
         polarity: 'V',
-        position: [2, 1],
+        position: POSITIONS['zlte'],
     },
     {
         id: 4,
@@ -37,7 +46,7 @@ export const vehicles: Vehicle[] = [
         color: (text: string) => chalk.bgKeyword('indigo')(text),
         length: 2,
         polarity: 'V',
-        position: [5, 1],
+        position: POSITIONS['fialove'],
     },
 
     {
@@ -46,7 +55,7 @@ export const vehicles: Vehicle[] = [
         color: (text: string) => chalk.bgKeyword('dimgrey')(text),
         length: 2,
         polarity: 'H',
-        position: [5, 5],
+		position: POSITIONS['sive'],
     },
     {
         id: 6,
@@ -54,15 +63,15 @@ export const vehicles: Vehicle[] = [
         color: (text: string) => chalk.bgGreen(text),
         length: 3,
         polarity: 'V',
-        position: [2, 4],
-    },
+		position: POSITIONS['zelene'],
+	},
     {
         id: 7,
         name: 'svetlomodre',
         color: (text: string) => chalk.bgBlueBright(text),
         length: 3,
         polarity: 'H',
-        position: [6, 3],
+		position: POSITIONS['svetlomodre'],
     },
     {
         id: 8,
@@ -70,24 +79,8 @@ export const vehicles: Vehicle[] = [
         color: (text: string) => chalk.bgKeyword('darkblue')(text),
         length: 3,
         polarity: 'V',
-        position: [1, 6],
+        position: POSITIONS['tmavomodre'],
     },
 ];
 
-export enum DIRECTION {
-    UP,
-    RIGHT,
-    DOWN,
-    LEFT,
-}
-
-export const directions = [DIRECTION.UP, DIRECTION.RIGHT, DIRECTION.DOWN, DIRECTION.LEFT];
-
-export interface Vehicle {
-    id: number;
-    name: string;
-    color: (text: string) => string;
-    length: number;
-    polarity: 'H' | 'V';
-    position: number[];
-}
+export const directions : DIRECTION[]= DIRECTIONS;

@@ -10,3 +10,4 @@ const crossroad = new Crossroad([6, 6], vehicles);
 
 // bfs | dfs
 solve('dfs', crossroad, 'cervene');
+// solve('bfs', crossroad, 'cervene');

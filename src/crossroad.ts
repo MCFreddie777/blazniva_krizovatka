@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { cloneDeep } from 'lodash';
-import { DIRECTION, ENTITIES, Vehicle } from './variables';
+import { ENTITIES } from './variables';
+import { Vehicle, DIRECTION } from './types';
 
 const log = (text: string) => process.stdout.write(text);
 
