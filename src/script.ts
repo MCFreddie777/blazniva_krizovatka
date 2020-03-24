@@ -1,5 +1,12 @@
-import Crossroad from "./crossroad";
-import { positions as vehiclePositions } from "./vehicles";
+import Crossroad from './crossroad';
+import { vehicles } from './variables';
+import { solve } from './solver';
 
-const crossroad = new Crossroad([6, 6], [{ i: 3, j: 7 }], vehiclePositions);
-crossroad.prettyPrint();
+// turn off for graphical prints
+process.env.PRINT_GRAPHS = '1';
+
+// init crossroad with default vehicles
+const crossroad = new Crossroad([6, 6], vehicles);
+
+solve('bfs', crossroad, 'cervene');
+// solve('dfs', crossroad, 'cervene');
