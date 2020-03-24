@@ -49,11 +49,25 @@ export default class Crossroad {
         }
     }
 
-    setExit(mPos: number) {
+	/**
+	 * Sets the last element in the given row the array as an exit
+	 *
+	 * @param mPos number of the row which is the given vehicle in
+	 */
+	setExit(mPos: number) {
         this.exit = mPos;
         this.array[mPos][this.size[1] - 1] = ENTITIES.EXIT;
     }
 
+	/**
+	 * Moves the car on given crossroad (state) if possible
+	 *
+	 * @param direction - direction to move
+	 * @param state - current state
+	 * @param vehicle - vehicle
+	 * @param steps - the number of steps to move in that direction
+	 * @return new State where the car is moved if it's possible | undefined
+	 */
     move(
         direction: DIRECTION,
         state: Crossroad,
@@ -79,6 +93,13 @@ export default class Crossroad {
         return undefined;
     }
 
+	/**
+	 * Checks whether the given vehicle can move given number if steps in given direction
+	 *
+	 * @param vehicle : Vehicle
+	 * @param direction : DIRECTION
+	 * @param steps : number of steps
+	 */
     canMove(vehicle: Vehicle, direction: DIRECTION, steps: number): boolean {
         const polarity = vehicle.polarity;
         if (
@@ -105,14 +126,26 @@ export default class Crossroad {
         }
     }
 
-    vehicleExits(vehicleId: number) {
+	/**
+	 * Checks whether the given vehicle does not appear next to the exit
+	 *
+	 * @param vehicleId - id of the vehicle to check
+	 */
+	vehicleExits(vehicleId: number) {
         const vehicle = this.vehicles.find(v => v.id == vehicleId)!;
         return (
             this.array[vehicle.position[0]][vehicle.position[1] + vehicle.length] == ENTITIES.EXIT
         );
     }
 
-    prettyPrint(silent: boolean = false): void {
+	/**
+	 * Fancy function which prints colorful representation
+	 * of current state into the console
+	 *
+	 * @param silent: boolean - whether it should print 'chars' of the entities
+	 * such as id's of vehicles
+	 */
+	prettyPrint(silent: boolean = false): void {
         for (let i = 0; i < this.size[0]; i++) {
             for (let j = 0; j < this.size[1]; j++) {
                 let color = undefined;

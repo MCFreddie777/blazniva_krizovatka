@@ -7,6 +7,15 @@ export enum DIRECTION {
     LEFT,
 }
 
+/**
+ * Vehicle
+ * id,
+ * name - pretty print for user
+ * color - function for chalk.js which returns color set for output
+ * length,
+ * polarity - HORIZONTAL | VERTICAL
+ * position - on the graph in crossroad
+ */
 export interface Vehicle {
     id: number;
     name: string;

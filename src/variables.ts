@@ -4,12 +4,19 @@ import {DIRECTION, Vehicle} from "./types";
 // Modify this source file for more tests
 import { DIRECTIONS, POSITIONS } from './test/testset_1';
 
+/**
+ * Entities in crossroad array which symbolizes empty space, exit or wall (border)
+ */
 export const ENTITIES: any = {
     FREE: '0',
     WALL: 'B',
     EXIT: 'E',
 };
 
+/**
+ * The array of starting point
+ * Positions are loaded from src/test/testset_*.ts
+ */
 export const vehicles: Vehicle[] = [
     {
         id: 1,
